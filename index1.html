@@ -1,0 +1,21 @@
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+<script>
+    var socket = io.connect('http://localhost:9000');
+    const room_id='hello1';
+    let new_join='new_join'+room_id;
+    socket.emit('join_room',room_id);
+    socket.emit('visitor_count',room_id);
+    socket.on('new_join',function (count) {
+        console.log(count);
+    });
+    socket.on(new_join,function (count) {
+        console.log(count);
+    });
+    $(window).on("beforeunload", function() {
+        socket.emit('leave_room', room_id);
+    })
+</script>
